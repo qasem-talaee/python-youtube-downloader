@@ -53,7 +53,7 @@ class YtDownload():
                 if int(item.abr.replace("kbps", "")) > int(audio.abr.replace("kbps", "")):
                     audio = item
             for index, item in enumerate(videos):
-                menu_strings = f"{index + 1}. Resolution : {item.resolution} -- Format : {item.mime_type} -- FileSize : {item.filesize / (1024 * 1024):.2f} MiB"
+                menu_strings = f"{index + 1}. Resolution : {item.resolution} -- Format : {item.mime_type} -- FileSize : {(item.filesize + audio.filesize) / (1024 * 1024):.2f} MiB"
                 print(menu_strings)
             index = int(input("Enter number of choice you want to download : ")) - 1
             # Download Video
