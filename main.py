@@ -45,7 +45,7 @@ class YtDownload():
             print("ERR : The video link is not valid")
         else:
             self.yt = YouTube(self.link, on_progress_callback = on_progress)
-            self.title = self.yt.title
+            self.title = re.sub(r'[^a-zA-Z0-9]', '', self.yt.title)
             videos = self.yt.streams.filter(progressive=False).filter(type="video")
             audios = self.yt.streams.filter(progressive=False).filter(type="audio")
             audio = audios[0]
@@ -68,7 +68,7 @@ class YtDownload():
                 video_clip = VideoFileClip(video_path)
                 audio_clip = AudioFileClip(audio_path)
                 final_clip = video_clip.with_audio(audio_clip)
-                final_output_path = os.path.join(self.path, f"{self.yt.title}.{videos[index].mime_type.replace("video/", "")}")
+                final_output_path = os.path.join(self.path, f"{self.title}.{videos[index].mime_type.replace("video/", "")}")
                 final_clip.write_videofile(final_output_path, codec='libx264', audio_codec='aac')
                 video_clip.close()
                 audio_clip.close()
