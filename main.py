@@ -12,6 +12,15 @@ class YtDownload():
         self.yt = None
         self.path = os.path.join(os.path.expanduser('~'), 'Downloads')
         self.youtube_regex = r'^(https?://)?(www\.)?(youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/|youtube\.com/v/|youtube\.com/playlist\?list=|youtube\.com/.*[?&]v=)([a-zA-Z0-9_-]{11})$'
+        self.remove_from_before()
+
+    def remove_from_before(self):
+        files = os.listdir(self.path)
+        for item in files:
+            if re.search("tempVideo.*", item):
+                os.remove(os.path.join(self.path, item))
+            if re.search("tempAudio.*", item):
+                os.remove(os.path.join(self.path, item))
 
     def download_audio(self, audio):
         retry = 10
